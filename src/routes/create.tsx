@@ -18,9 +18,9 @@ import { UserAvatar } from "@/components/UserAvatar";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/create")({
-  validateSearch: (s: Record<string, unknown>) => ({
+  validateSearch: (s: Record<string, unknown>): { type: string; edit?: string } => ({
     type: typeof s.type === "string" ? s.type : "post",
-    edit: typeof s.edit === "string" ? s.edit : undefined,
+    ...(typeof s.edit === "string" ? { edit: s.edit } : {}),
   }),
   head: () => ({ meta: [{ title: "Create · SAC Community" }, { name: "description", content: "Create posts, reels and stories on SAC Community." }, { property: "og:title", content: "Create on SAC" }, { property: "og:description", content: "Create posts, reels and stories on SAC Community." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   component: () => <RequireAuth><CreateSwitch /></RequireAuth>,
